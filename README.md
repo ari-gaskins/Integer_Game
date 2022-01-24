@@ -5,4 +5,4 @@
 - The player needs to add the integers in their hand together, then record that result. 
 - If the result recorded is less than or greater than zero, the player must choose an integer to discard, and 'draw' a new integer into their hand.
 - If the result recorded is equal to zero, player wins!
-- Note: Result recorded may be outside the -10 to 10 bounds, but the numbers drawn must always be within this subset.
+- Note: Result recorded needs to be checked for correctness; if incorrect, the user must re-enter the result.
