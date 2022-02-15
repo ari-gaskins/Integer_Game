@@ -5,7 +5,7 @@ import random
 # generate new game hand
 def generate_hand():
     hand = []
-    for i in range(0, 4):
+    for i in range(0, 3):
         num = random.randint(-10, 10)
         hand.append(num)
     return(hand)
@@ -30,6 +30,7 @@ def draw_new():
     return(num)
 
 
+# get number user wants to discard
 def get_discard_num():
     discard_num = input('Enter integer to discard: ')
     discard_num = int(discard_num) 
@@ -47,7 +48,7 @@ def get_discard(hand):
        new_num = draw_new()
        hand.append(new_num)
        print(hand)
-       main()
+       continue_game(hand)
        break
     while contains_discard is False:
         print('Please select an integer in your hand to discard: ')
@@ -73,15 +74,28 @@ def check_correct(hand, result):
         check_win(hand, result)
     else:    
         print('Try again!')
-        get_user_answer()
+        result = get_user_answer()
+        check_correct(hand, result)
 
 
+# continue game function
+# using hand already made, check results and if the user won the game
+# if loser did not win, user must choose number to discard
+# user then draws a new number to add to their hand
+# process reruns until the user has won
+
+
+def continue_game(hand):
+    user_result = get_user_answer()
+    check_correct(hand, user_result)
 
 
 
 
 def main():
    hand = generate_hand()
+   print(hand)
+   continue_game(hand)
 
 
 if __name__ == '__main__':
