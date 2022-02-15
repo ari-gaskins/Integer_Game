@@ -1,6 +1,8 @@
 # Integer Game 
 import random
 
+
+# generate new game hand
 def generate_hand():
     hand = []
     for i in range(0, 4):
@@ -9,38 +11,78 @@ def generate_hand():
     return(hand)
 
 
+# get user hand sum
+def get_user_answer():
+    user_result = input('Enter the sum of your hand: ')
+    user_result = int(user_result)
+    return(user_result)
+
+
+# calculate the sum of the hand to be compared to user calculation
 def calculate_hand(hand):
     hand_sum = sum(hand)
     return(hand_sum)
 
 
-def check_correct(hand, result):
-    if calculate_hand(hand) == result:
-        return('Correct!')
-    else:    
-        return('Try again!')
+# draw pile
+def draw_new():
+    num = random.randint(-10, 10)
+    return(num)
 
 
-def get_discard(hand):
+def get_discard_num():
     discard_num = input('Enter integer to discard: ')
     discard_num = int(discard_num) 
-    contains_discard = discard_num in hand
-    if contains_discard is True:
-       hand.remove(discard_num)
-    else:
-        return('Please select an integer in your hand to discard: ')
+    return(discard_num)
 
 
+# edit the user's hand for the discard exchange
+def get_discard(hand):
+    num = get_discard_num()
+    contains_discard = num in hand
+    while contains_discard is True:
+       hand.remove(num)
+       print(hand)
+       print('Generating new integer...')
+       new_num = draw_new()
+       hand.append(new_num)
+       print(hand)
+       main()
+       break
+    while contains_discard is False:
+        print('Please select an integer in your hand to discard: ')
+        num = get_discard_num()
+        break
+
+
+# determine if user has won the game
 def check_win(hand, result):
-    if check_correct(hand, result) == 'Correct':
-        if result == 0:
-            return('You Win!')
-        else:
-            get_discard(hand)
-    
+    if result == 0:
+        print('You Win!')
+        exit
+    else:
+        print('Keep Trying!')
+        get_discard(hand)
 
-new_hand = generate_hand()
-print(new_hand)
-user_result = input('Enter the sum of your hand: ')
-user_result = int(user_result)
-print(check_correct(new_hand, user_result))
+ 
+# determine if user result is correct
+def check_correct(hand, result):
+    correct_result = calculate_hand(hand)
+    if correct_result == result:
+        print('Correct!')
+        check_win(hand, result)
+    else:    
+        print('Try again!')
+        get_user_answer()
+
+
+
+
+
+
+def main():
+   hand = generate_hand()
+
+
+if __name__ == '__main__':
+    main()
